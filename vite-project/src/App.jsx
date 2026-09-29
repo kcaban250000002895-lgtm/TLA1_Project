@@ -6,14 +6,13 @@ import SummaryCards from './components/SummaryCards';
 export default function App() {
   const [categories, setCategories] = useState(() => {
     const saved = localStorage.getItem('income_categories');
-    return saved ? JSON.parse(saved) : [
-      { id: 1, name: 'Consulting', description: 'Enterprise technical support contract' }
-    ];
+    return saved
+      ? JSON.parse(saved)
+      : [{ id: 1, name: 'Consulting', description: 'Enterprise technical support contract' }];
   });
 
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Persist categories in LocalStorage on update
   useEffect(() => {
     localStorage.setItem('income_categories', JSON.stringify(categories));
   }, [categories]);
@@ -38,8 +37,11 @@ export default function App() {
         <div className="row justify-content-center">
           <div className="col-lg-8">
             <header className="mb-4 text-center">
-              <h1 className="fw-bold text-primary">Enterprise Income Tracker</h1>
-              <p className="text-muted">React Refactored Income Category Ledger</p>
+              <div className="d-inline-flex align-items-center justify-content-center bg-primary text-white p-3 rounded-circle mb-3 shadow-sm">
+                <i className="bi bi-wallet2 fs-2"></i>
+              </div>
+              <h1 className="fw-bold text-primary mb-1">Enterprise Income Tracker</h1>
+              <p className="text-muted">React Modular Refactor — Finals TLA 1</p>
             </header>
 
             <SummaryCards totalCategories={categories.length} />
