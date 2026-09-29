@@ -55,16 +55,18 @@ const [searchTerm, setSearchTerm] = useState('');
 #### **B. State Persistence via Side Effects (useEffect)**
 To ensure data persists across browser reloads, useEffect triggers a synchronization side-effect whenever the categories state changes:
 
-JavaScript
+```jsx
 useEffect(() => {
   localStorage.setItem('income_categories', JSON.stringify(categories));
 }, [categories]);
-Dependency Array: [categories] guarantees that localStorage.setItem runs only when categories changes, preventing unneeded storage writes.
+```
+
+### Dependency Array: [categories] guarantees that localStorage.setItem runs only when categories changes, preventing unneeded storage writes.
 
 #### **C. Controlled Components & Form Validation (CategoryForm.jsx)**
 Instead of querying input elements directly from the DOM on submit, input values are continuously synchronized with local component state via onChange.
 
-JavaScript
+```jsx
 const [name, setName] = useState('');
 const [description, setDescription] = useState('');
 const [error, setError] = useState('');
@@ -82,14 +84,16 @@ const handleSubmit = (e) => {
   setName('');
   setDescription('');
 };
-Preventing Page Reloads: e.preventDefault() halts default browser HTTP form submissions.
+```
 
-Controlled Inputs: value={name} and onChange={(e) => setName(e.target.value)} ensure that React serves as the single source of truth for the form data.
+### Preventing Page Reloads: e.preventDefault() halts default browser HTTP form submissions.
 
-D. Declarative Table Rendering & Live Filtering (CategoryTable.jsx)
+### Controlled Inputs: value={name} and onChange={(e) => setName(e.target.value)} ensure that React serves as the single source of truth for the form data.
+
+#### **D. Declarative Table Rendering & Live Filtering (CategoryTable.jsx)**
 The UI is a direct expression of current state. Filtered array results are calculated dynamically during render without mutating the underlying data array:
 
-JavaScript
+```jsx
 const filteredCategories = categories.filter(
   (cat) =>
     cat.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -107,7 +111,8 @@ JavaScript
     </td>
   </tr>
 ))}
-Keys in Lists: The key={cat.id} prop allows React’s Virtual DOM reconciliation engine to uniquely identify rows, ensuring optimal rendering performance when items are added or removed.
+```
+### Keys in Lists: The key={cat.id} prop allows React’s Virtual DOM reconciliation engine to uniquely identify rows, ensuring optimal rendering performance when items are added or removed.
 
 ## 🛠️ Tech Stack & Dependencies
 Framework: React 18 / 19 (via Vite)
