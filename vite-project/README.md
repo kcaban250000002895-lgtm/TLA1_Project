@@ -29,6 +29,6 @@ A modular React application refactored from our Midterm Vanilla DOM Income Categ
 ### 2. Core Code Explanation
 
 #### **A. Declarative Rendering vs. Direct DOM Injections**
-In the Midterm baseline, elements were manually inserted into RAM[cite: 1]:
+In the Midterm baseline, elements were manually inserted into RAM:
 ```javascript
 incomeTableBody.insertAdjacentHTML("beforeend", newRowHTML);
