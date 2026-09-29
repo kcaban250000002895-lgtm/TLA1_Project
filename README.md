@@ -7,28 +7,43 @@ A modular React application refactored from our Midterm Vanilla DOM Income Categ
 
 ---
 
-## 🛠️ Key Architectural Differences
+## 📋 Architectural Overview: Vanilla DOM vs. React Refactor
 
-| Baseline Feature | Midterm Vanilla DOM Implementation | Refactored React Implementation |
+This application transitions our Midterm baseline logic from imperative Document Object Model (DOM) manipulation into a declarative React functional component model:
+
+| Architectural Concept | Midterm Vanilla DOM Baseline | Refactored React Application |
 | :--- | :--- | :--- |
-| **Node Retrieval** | `document.getElementById("txtCatName")` | Controlled component state using `useState("")` |
-| **Event Handling** | `addCategoryBtn.addEventListener("click", ...)` | Native form submit event handler (`onSubmit`) |
-| **Dynamic Mutation**| `incomeTableBody.insertAdjacentHTML("beforeend", ...)` | Declarative array rendering via `categories.map()` |
-| **Validation** | Native browser `alert()` popups | Dynamic in-app alert state feedback |
-| **Data Persistence**| None (RAM reset on page refresh) | Synchronized persistent state via `localStorage` |
+| **Node Access & Retrieval** | Direct element lookup via `document.getElementById("txtCatName")` | Controlled inputs bound to component state (`useState`) |
+| **Event Subscriptions** | Manual listener wiring via `addCategoryBtn.addEventListener("click", ...)` | Declarative form submission via `onSubmit={handleSubmit}` |
+| **Dynamic UI Rendering** | Direct string mutation via `incomeTableBody.insertAdjacentHTML("beforeend", ...)` | Reactive rendering by mapping array state (`categories.map()`) |
+| **User Validation** | Blocking browser alert boxes (`alert(...)`) | In-app, non-blocking dynamic error banner state |
+| **Data Persistence** | RAM-only storage (resets on page refresh) | Persistent browser synchronization via `localStorage` side-effects |
 
 ---
 
 ## 🤖 AI Implementation & Code Defense
 
-### 1. AI-Assisted Features
-- **State Flow Refactoring:** Guided the refactoring of imperative DOM queries into top-level unidirectional React state in `App.jsx`.
-- **LocalStorage Sync:** Implemented lazy state initialization inside `useState` paired with `useEffect` side-effects.
-- **UI Enhancements:** Built live search table filtering and metric summary cards.
+### 1. Features & Components Developed with AI Assistance
 
-### 2. Core Code Explanation
+AI assistance was utilized throughout the refactoring workflow to improve structure, state predictability, and visual polish:
 
-#### **A. Declarative Rendering vs. Direct DOM Injections**
-In the Midterm baseline, elements were manually inserted into RAM:
-```javascript
-incomeTableBody.insertAdjacentHTML("beforeend", newRowHTML);
+* **Modular Component Architecture:** Assisted in decomposing the monolithic single-file HTML/JS structure into modular, single-responsibility React functional components (`SummaryCards`, `CategoryForm`, `CategoryTable`).
+* **Unidirectional State Flow:** Guided the migration of state ownership upward to `App.jsx` ("Lifting State Up") to enable seamless prop sharing across independent components.
+* **Persistent Local Storage Sync:** Formulated a lazy initialization strategy using `useState` paired with `useEffect` side-effects to synchronize application state with `localStorage`.
+* **Enhanced UI & Features:** Designed an integrated real-time text filter/search feature, metric KPI overview cards, and integrated Bootstrap Icons.
+
+---
+
+### 2. Deep-Dive Technical Explanation & Code Defense
+
+#### **A. Centralized State Ownership & Unidirectional Data Flow (`App.jsx`)**
+State is centralized in the parent component (`App.jsx`) and passed down to child components via props.
+
+```jsx
+const [categories, setCategories] = useState(() => {
+  const saved = localStorage.getItem('income_categories');
+  return saved
+    ? JSON.parse(saved)
+    : [{ id: 1, name: 'Consulting', description: 'Enterprise technical support contract' }];
+});
+const [searchTerm, setSearchTerm] = useState('');
