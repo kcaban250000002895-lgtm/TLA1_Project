@@ -47,3 +47,73 @@ const [categories, setCategories] = useState(() => {
     : [{ id: 1, name: 'Consulting', description: 'Enterprise technical support contract' }];
 });
 const [searchTerm, setSearchTerm] = useState('');
+
+Lazy State Initialization: Passing a function into useState ensures localStorage.getItem() is executed only once when the component initially mounts, avoiding unnecessary computational overhead on subsequent re-renders.
+
+Immutability: When appending a new category, array state is updated immutably using the spread operator ([...prev, newCat]), ensuring React detects state changes and triggers a re-render.
+
+B. State Persistence via Side Effects (useEffect)
+To ensure data persists across browser reloads, useEffect triggers a synchronization side-effect whenever the categories state changes:
+
+JavaScript
+useEffect(() => {
+  localStorage.setItem('income_categories', JSON.stringify(categories));
+}, [categories]);
+Dependency Array: [categories] guarantees that localStorage.setItem runs only when categories changes, preventing unneeded storage writes.
+
+C. Controlled Components & Form Validation (CategoryForm.jsx)
+Instead of querying input elements directly from the DOM on submit, input values are continuously synchronized with local component state via onChange.
+
+JavaScript
+const [name, setName] = useState('');
+const [description, setDescription] = useState('');
+const [error, setError] = useState('');
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+
+  if (!name.trim() || !description.trim()) {
+    setError('Please complete both input fields.');
+    return;
+  }
+
+  setError('');
+  onAddCategory({ name: name.trim(), description: description.trim() });
+  setName('');
+  setDescription('');
+};
+Preventing Page Reloads: e.preventDefault() halts default browser HTTP form submissions.
+
+Controlled Inputs: value={name} and onChange={(e) => setName(e.target.value)} ensure that React serves as the single source of truth for the form data.
+
+D. Declarative Table Rendering & Live Filtering (CategoryTable.jsx)
+The UI is a direct expression of current state. Filtered array results are calculated dynamically during render without mutating the underlying data array:
+
+JavaScript
+const filteredCategories = categories.filter(
+  (cat) =>
+    cat.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    cat.description.toLowerCase().includes(searchTerm.toLowerCase())
+);
+JavaScript
+{categories.map((cat) => (
+  <tr key={cat.id}>
+    <td className="fw-semibold text-dark">{cat.name}</td>
+    <td className="text-secondary">{cat.description}</td>
+    <td className="text-end">
+      <button className="btn btn-outline-danger btn-sm" onClick={() => onDelete(cat.id)}>
+        Delete
+      </button>
+    </td>
+  </tr>
+))}
+Keys in Lists: The key={cat.id} prop allows React’s Virtual DOM reconciliation engine to uniquely identify rows, ensuring optimal rendering performance when items are added or removed.
+
+🛠️ Tech Stack & Dependencies
+Framework: React 18 / 19 (via Vite)
+
+Styling: Bootstrap 5.3 CDN & Bootstrap Icons
+
+Version Control: Git & GitHub
+
+Deployment Platform: Vercel
