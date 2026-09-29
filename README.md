@@ -47,10 +47,10 @@ const [categories, setCategories] = useState(() => {
     : [{ id: 1, name: 'Consulting', description: 'Enterprise technical support contract' }];
 });
 const [searchTerm, setSearchTerm] = useState('');
+```
+# Lazy State Initialization: Passing a function into useState ensures localStorage.getItem() is executed only once when the component initially mounts, avoiding unnecessary computational overhead on subsequent re-renders.
 
-Lazy State Initialization: Passing a function into useState ensures localStorage.getItem() is executed only once when the component initially mounts, avoiding unnecessary computational overhead on subsequent re-renders.
-
-Immutability: When appending a new category, array state is updated immutably using the spread operator ([...prev, newCat]), ensuring React detects state changes and triggers a re-render.
+# Immutability: When appending a new category, array state is updated immutably using the spread operator ([...prev, newCat]), ensuring React detects state changes and triggers a re-render.
 
 #### **B. State Persistence via Side Effects (useEffect)
 To ensure data persists across browser reloads, useEffect triggers a synchronization side-effect whenever the categories state changes:
