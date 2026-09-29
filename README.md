@@ -2,8 +2,8 @@
 
 A modular React application refactored from our Midterm Vanilla DOM Income Category Ledger for **Finals TLA 1**.
 
-- **Live Demo (Vercel):** [INSERT VERCEL DEPLOYMENT LINK HERE]
-- **GitHub Repository:** [INSERT GITHUB REPO LINK HERE]
+- **Live Demo (Vercel):** [(https://tla-1-project-two.vercel.app/)]
+- **GitHub Repository:** [https://github.com/kcaban250000002895-lgtm/TLA1_Project]
 
 ---
 
