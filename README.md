@@ -52,7 +52,7 @@ Lazy State Initialization: Passing a function into useState ensures localStorage
 
 Immutability: When appending a new category, array state is updated immutably using the spread operator ([...prev, newCat]), ensuring React detects state changes and triggers a re-render.
 
-B. State Persistence via Side Effects (useEffect)
+#### **B. State Persistence via Side Effects (useEffect)
 To ensure data persists across browser reloads, useEffect triggers a synchronization side-effect whenever the categories state changes:
 
 JavaScript
@@ -61,7 +61,7 @@ useEffect(() => {
 }, [categories]);
 Dependency Array: [categories] guarantees that localStorage.setItem runs only when categories changes, preventing unneeded storage writes.
 
-C. Controlled Components & Form Validation (CategoryForm.jsx)
+#### **C. Controlled Components & Form Validation (CategoryForm.jsx)
 Instead of querying input elements directly from the DOM on submit, input values are continuously synchronized with local component state via onChange.
 
 JavaScript
@@ -109,7 +109,7 @@ JavaScript
 ))}
 Keys in Lists: The key={cat.id} prop allows React’s Virtual DOM reconciliation engine to uniquely identify rows, ensuring optimal rendering performance when items are added or removed.
 
-🛠️ Tech Stack & Dependencies
+## 🛠️ Tech Stack & Dependencies
 Framework: React 18 / 19 (via Vite)
 
 Styling: Bootstrap 5.3 CDN & Bootstrap Icons
